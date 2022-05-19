@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Bus extends Vehicle implements changeState {
+public class Bus extends Vehicle implements changeState,driving {
     int maxPassenger;
     int nowPassenger;
     int fee;
@@ -26,7 +26,7 @@ public class Bus extends Vehicle implements changeState {
                 this.nowPassenger = maxPassenger;
             } else {
                 // 탑승시 현재 승객수가 증가
-                nowPassenger = nowPassenger + takePassenger;
+                nowPassenger += takePassenger;
                 System.out.println("현재 탑승 인원 : " + nowPassenger);
             }
         } else
@@ -39,9 +39,10 @@ public class Bus extends Vehicle implements changeState {
         if (nowFuel() < 10) {
             System.out.println("주유량을 확인해 주세요");
             nowState = "차고지 행";
+            return;
         }
         // 변경할 속도를 입력 받아 현재 속도에 추가 하거나 빼기
-        this.nowSpeed = nowSpeed + changeSpeed;
+        this.nowSpeed += changeSpeed;
         System.out.println("현재 속도 : " + nowSpeed);
     }
 
@@ -60,5 +61,11 @@ public class Bus extends Vehicle implements changeState {
         if (fuelVolume < 10) {
             System.out.println("주유가 필요하다");
         }
+    }
+
+    @Override
+    public void driving() {
+        fuelVolume -= 10;
+        System.out.println("현재 주유량 : " + fuelVolume);
     }
 }
